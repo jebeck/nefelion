@@ -1,3 +1,13 @@
 {
-  "extends": "react-app"
+  "extends": ["react-app", "prettier"],
+  "globals": {
+    "Linear": true,
+    "Power1": true,
+    "TimelineMax": true,
+    "TweenMax": true
+  },
+  "rules": {
+    "react/prop-types": 2,
+    "react/sort-prop-types": 2
+  }
 }

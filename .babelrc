@@ -39,5 +39,48 @@
       ],
       "presets": [["env", { "modules": "commonjs" }], "next/babel"]
     }
-  }
+  },
+  "plugins": [
+    [
+      "module-alias",
+      [
+        {
+          "src": "./components",
+          "expose": "components"
+        },
+        {
+          "src": "./hoc",
+          "expose": "hoc"
+        },
+        {
+          "src": "./pages",
+          "expose": "pages"
+        },
+        {
+          "src": "./redux/actions/atomic",
+          "expose": "atomic"
+        },
+        {
+          "src": "./redux/actions/sagas",
+          "expose": "sagas"
+        },
+        {
+          "src": "./redux/reducers",
+          "expose": "reducers"
+        },
+        {
+          "src": "./redux/store",
+          "expose": "store"
+        },
+        {
+          "src": "./utils",
+          "expose": "utils"
+        },
+        {
+          "src": "./utils/animations",
+          "expose": "animations"
+        }
+      ]
+    ]
+  ]
 }
