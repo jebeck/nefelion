@@ -19,10 +19,16 @@
   },
   "homepage": "https://github.com/jebeck/nefelion#readme",
   "dependencies": {
-    "babel-plugin-styled-components": "1.5.0",
+    "chance": "1.0.13",
+    "immutability-helper": "2.6.4",
     "next": "4.2.3",
+    "polished": "1.9.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
+    "react-redux": "5.0.6",
+    "redux": "3.7.2",
+    "redux-logger": "3.0.6",
+    "redux-saga": "0.16.0",
     "semantic-ui-css": "2.2.12",
     "semantic-ui-react": "0.77.2",
     "styled-components": "3.0.2",
@@ -30,12 +36,17 @@
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
+    "babel-plugin-module-alias": "1.6.0",
+    "babel-plugin-styled-components": "1.5.0",
     "eslint": "4.1.1",
+    "eslint-config-prettier": "2.9.0",
     "eslint-config-react-app": "2.1.0",
     "eslint-plugin-flowtype": "2.34.1",
     "eslint-plugin-import": "2.6.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.1.0"
+    "eslint-plugin-react": "7.1.0",
+    "prettier-eslint": "8.8.1",
+    "prop-types": "15.6.0"
   },
   "engines": {
     "node": "8.x"

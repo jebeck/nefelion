@@ -36,6 +36,10 @@ export default class NefelionDocument extends Document {
             href={`https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/${semanticUiCssVersion}/semantic.min.css`}
           />
           {this.props.styleTags}
+          <script src="/static/gsap/TweenMax.min.js" />
+          <script src="/static/gsap/TimelineMax.min.js" />
+          <script src="/static/gsap/DrawSVGPlugin.min.js" />
+          <script src="/static/gsap/MorphSVGPlugin.min.js" />
         </Head>
         <body>
           <Main />
