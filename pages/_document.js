@@ -1,10 +1,21 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import React from 'react';
+import { ServerStyleSheet } from 'styled-components';
 
 const config = require('../package.json');
 const semanticUiCssVersion = config.dependencies['semantic-ui-css'];
 
 export default class NefelionDocument extends Document {
+  static getInitialProps({ renderPage }) {
+    const sheet = new ServerStyleSheet();
+
+    const page = renderPage(App => props =>
+      sheet.collectStyles(<App {...props} />)
+    );
+    const styleTags = sheet.getStyleElement();
+    return { ...page, styleTags };
+  }
+
   render() {
     const viewportContent =
       'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui';
@@ -24,6 +35,7 @@ export default class NefelionDocument extends Document {
             rel="stylesheet"
             href={`https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/${semanticUiCssVersion}/semantic.min.css`}
           />
+          {this.props.styleTags}
         </Head>
         <body>
           <Main />
