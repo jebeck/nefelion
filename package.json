@@ -1,0 +1,37 @@
+{
+  "name": "nefelion",
+  "version": "0.0.0",
+  "description": "My 'little cloud' (☁️ nefelion) for self-tracking.",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jebeck/nefelion.git"
+  },
+  "author": "Jana E. Beck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jebeck/nefelion/issues"
+  },
+  "homepage": "https://github.com/jebeck/nefelion#readme",
+  "dependencies": {
+    "next": "4.2.3",
+    "react": "16.2.0",
+    "react-dom": "16.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "8.2.1",
+    "eslint": "4.16.0",
+    "eslint-config-react-app": "2.1.0",
+    "eslint-plugin-flowtype": "2.42.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.6.0"
+  },
+  "engines": {
+    "node": "8.x"
+  }
+}
