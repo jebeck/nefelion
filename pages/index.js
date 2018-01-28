@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Cloud from 'components/Cloud';
-import withLayout from 'hoc/withLayout';
+import wrapPage from 'hoc/wrapPage';
 import { themePropTypes } from 'utils/themes';
 
 const Index = props => {
@@ -13,4 +13,4 @@ Index.propTypes = {
   theme: themePropTypes.isRequired,
 };
 
-export default withLayout(Index);
+export default wrapPage(Index);
