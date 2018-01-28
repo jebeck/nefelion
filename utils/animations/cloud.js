@@ -242,3 +242,42 @@ export function mount() {
 
   return tl;
 }
+
+export function unmount() {
+  const tl = new TimelineMax();
+
+  tl
+    .add('start_transition')
+    .add(
+      TweenMax.to('.CirclesStroke--Upper', 1, {
+        ease: Power1.easeInOut,
+        strokeOpacity: 0,
+      }),
+      'start_transition'
+    )
+    .add(
+      TweenMax.to('.Circles-Fill, .Text', 1.25, { fillOpacity: 0 }),
+      'start_transition'
+    )
+    .add(
+      TweenMax.to('.CirclesStroke--Lower', 1.75, {
+        drawSVG: '0',
+        ease: Power1.easeInOut,
+        strokeOpacity: 0,
+      }),
+      'start_transition'
+    )
+    .add(
+      makeSunTimeline()
+        .reverse(0)
+        .timeScale(1.5),
+      'start_transition'
+    )
+    .add(makeLinesTimeline().reverse(0), 'start_transition');
+
+  ['#Small', '#Medium', '#Large'].forEach((selector, i) => {
+    tl.add(makeBirdTimeline(selector, i).reverse(0), 'start_transition');
+  });
+
+  return tl;
+}

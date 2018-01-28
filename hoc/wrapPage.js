@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-transition-group';
 import { Provider } from 'react-redux';
+import Router from 'next/router';
 import { Grid, Sidebar } from 'semantic-ui-react';
 import styled, { ThemeProvider } from 'styled-components';
 
@@ -29,6 +31,11 @@ const Divider = styled.hr`
   opacity: 0.35;
 `;
 
+const TRANSITION_DURATIONS = {
+  '/': 2500,
+  '/login': 500,
+};
+
 export default function withLayout(PageComponent) {
   return class Page extends Component {
     static async getInitialProps({ req }) {
@@ -40,15 +47,36 @@ export default function withLayout(PageComponent) {
     static propTypes = {
       initialState: PropTypes.object,
       isServer: PropTypes.bool,
+      url: PropTypes.shape({
+        pathname: PropTypes.string.isRequired,
+      }),
     };
 
     constructor(props) {
       super(props);
 
+      this.state = { readyToGo: false };
       this.store = initStore();
     }
 
+    // componentDidMount() {
+    //   Router.onRouteChangeComplete = url => {
+    //     this.setState({ readyToGo: false })
+    //   }
+    // }
+
+    handleNavigation = path => {
+      const { url: { pathname } } = this.props;
+      this.setState({ readyToGo: true }, () => {
+        setTimeout(() => {
+          Router.push(path);
+        }, TRANSITION_DURATIONS[pathname]);
+        Router.prefetch(path);
+      });
+    };
+
     render() {
+      const { url: { pathname } } = this.props;
       const mode = 'dark';
       const theme = { mode };
       return (
@@ -56,12 +84,19 @@ export default function withLayout(PageComponent) {
           <ThemeProvider theme={theme}>
             <WholeViewport>
               <Sidebar.Pushable>
-                <NavMenu mode={mode} />
+                <NavMenu mode={mode} onClick={this.handleNavigation} />
                 <FullHeightPusher>
                   <Header theme={theme} />
                   <Divider />
                   <Grid columns={16} stackable>
-                    <PageComponent theme={theme} />
+                    <Transition
+                      in={!this.state.readyToGo}
+                      timeout={TRANSITION_DURATIONS[pathname]}
+                    >
+                      {status => (
+                        <PageComponent status={status} theme={theme} />
+                      )}
+                    </Transition>
                   </Grid>
                 </FullHeightPusher>
               </Sidebar.Pushable>

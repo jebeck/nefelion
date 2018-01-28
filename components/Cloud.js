@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { darken } from 'polished';
 import styled from 'styled-components';
 
-import { mount } from 'animations/cloud';
+import { mount, unmount } from 'animations/cloud';
 import { cloud, themePropTypes } from 'utils/themes';
 
 const SVG = styled.svg`
@@ -81,7 +81,13 @@ const InnerSunFill = styled.path`
 `;
 
 class Cloud extends Component {
+  static defaultProps = {
+    readyToGo: false,
+  };
+
   static propTypes = {
+    status: PropTypes.oneOf(['entering', 'entered', 'exiting', 'exited'])
+      .isRequired,
     theme: themePropTypes.isRequired,
   };
 
@@ -89,8 +95,22 @@ class Cloud extends Component {
     this.mountAnimation = mount();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.status === 'entered' && nextProps.status === 'exiting') {
+      if (this.mountAnimation) {
+        this.mountAnimation.kill();
+      }
+      this.unmountAnimation = unmount();
+    }
+  }
+
   componentWillUnmount() {
-    this.mountAnimation.kill();
+    if (this.mountAnimation) {
+      this.mountAnimation.kill();
+    }
+    if (this.unmountAnimation) {
+      this.unmountAnimation.kill();
+    }
   }
 
   render() {
