@@ -9,6 +9,8 @@ import styled, { ThemeProvider } from 'styled-components';
 import Header from 'components/Header';
 import NavMenu from 'components/NavMenu';
 import initStore from 'store/initStore';
+import initFirebase, { getFirebaseConfig } from 'utils/initFirebase';
+import logger from 'utils/logger';
 import { backgroundColor, mutedText } from 'utils/themes';
 
 const WholeViewport = styled.div`
@@ -41,12 +43,22 @@ export default function withLayout(PageComponent) {
     static async getInitialProps({ req }) {
       const isServer = Boolean(req);
       const store = initStore(isServer);
-      return { initialState: store.getState(), isServer };
+      const firebaseConfig = getFirebaseConfig();
+
+      return { firebaseConfig, initialState: store.getState(), isServer };
     }
 
     static propTypes = {
-      initialState: PropTypes.object,
-      isServer: PropTypes.bool,
+      firebaseConfig: PropTypes.shape({
+        apiKey: PropTypes.string,
+        authDomain: PropTypes.string,
+        databaseURL: PropTypes.string,
+        projectId: PropTypes.string,
+        storageBucket: PropTypes.string,
+        messagingSenderId: PropTypes.string,
+      }),
+      initialState: PropTypes.object.isRequired,
+      isServer: PropTypes.bool.isRequired,
       url: PropTypes.shape({
         pathname: PropTypes.string.isRequired,
       }),
@@ -55,15 +67,18 @@ export default function withLayout(PageComponent) {
     constructor(props) {
       super(props);
 
-      this.state = { readyToGo: false };
+      this.log = logger(props.isServer, 'Page', '#f08080');
       this.store = initStore();
+      this.firebase = initFirebase(
+        props.firebaseConfig,
+        props.isServer,
+        this.store.dispatch
+      );
+      if (!this.firebase) {
+        this.log('Ahhh, no Firebase! 😱');
+      }
+      this.state = { readyToGo: false };
     }
-
-    // componentDidMount() {
-    //   Router.onRouteChangeComplete = url => {
-    //     this.setState({ readyToGo: false })
-    //   }
-    // }
 
     handleNavigation = path => {
       const { url: { pathname } } = this.props;

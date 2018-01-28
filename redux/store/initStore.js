@@ -13,6 +13,7 @@ if (typeof window !== 'undefined') {
 
 const loggingMiddleware = createLoggingMiddleware({ collapsed: true });
 const sagaMiddleware = createSagaMiddleware();
+
 let store = null;
 
 function configureStore(state) {
