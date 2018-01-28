@@ -4,8 +4,9 @@
   "description": "My personal little data cloud ☁️",
   "private": true,
   "scripts": {
-    "dev": "next",
     "build": "next build",
+    "dev": "next",
+    "lint": "eslint **/*.js",
     "start": "next start"
   },
   "repository": {
@@ -31,6 +32,7 @@
     "react-redux": "5.0.6",
     "react-transition-group": "2.2.1",
     "redux": "3.7.2",
+    "redux-form": "7.2.1",
     "redux-logger": "3.0.6",
     "redux-saga": "0.16.0",
     "semantic-ui-css": "2.2.12",

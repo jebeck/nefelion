@@ -5,7 +5,7 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 
 import { mount, unmount } from 'animations/cloud';
-import { cloud, themePropTypes } from 'utils/themes';
+import { cloud } from 'utils/themes';
 
 const SVG = styled.svg`
   height: 100vh;
@@ -88,7 +88,6 @@ class Cloud extends Component {
   static propTypes = {
     status: PropTypes.oneOf(['entering', 'entered', 'exiting', 'exited'])
       .isRequired,
-    theme: themePropTypes.isRequired,
   };
 
   componentDidMount() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Broadcast } from 'react-broadcast';
 import { Transition } from 'react-transition-group';
 import { Provider } from 'react-redux';
 import Router from 'next/router';
@@ -35,7 +36,10 @@ const Divider = styled.hr`
 
 const TRANSITION_DURATIONS = {
   '/': 2500,
-  '/login': 500,
+  '/about': 0,
+  '/help': 0,
+  '/login': 0,
+  '/signup': 0,
 };
 
 export default function withLayout(PageComponent) {
@@ -97,25 +101,31 @@ export default function withLayout(PageComponent) {
       return (
         <Provider store={this.store}>
           <ThemeProvider theme={theme}>
-            <WholeViewport>
-              <Sidebar.Pushable>
-                <NavMenu mode={mode} onClick={this.handleNavigation} />
-                <FullHeightPusher>
-                  <Header theme={theme} />
-                  <Divider />
-                  <Grid columns={16} stackable>
-                    <Transition
-                      in={!this.state.readyToGo}
-                      timeout={TRANSITION_DURATIONS[pathname]}
-                    >
-                      {status => (
-                        <PageComponent status={status} theme={theme} />
-                      )}
-                    </Transition>
-                  </Grid>
-                </FullHeightPusher>
-              </Sidebar.Pushable>
-            </WholeViewport>
+            <Broadcast channel="firebase" value={this.firebase}>
+              <WholeViewport>
+                <Sidebar.Pushable>
+                  <NavMenu mode={mode} onClick={this.handleNavigation} />
+                  <FullHeightPusher>
+                    <Header theme={theme} />
+                    <Divider />
+                    <Grid columns={16} stackable verticalAlign="middle">
+                      <Transition
+                        in={!this.state.readyToGo}
+                        timeout={TRANSITION_DURATIONS[pathname]}
+                      >
+                        {status => (
+                          <PageComponent
+                            onNavigate={this.handleNavigation}
+                            status={status}
+                            theme={theme}
+                          />
+                        )}
+                      </Transition>
+                    </Grid>
+                  </FullHeightPusher>
+                </Sidebar.Pushable>
+              </WholeViewport>
+            </Broadcast>
           </ThemeProvider>
         </Provider>
       );
