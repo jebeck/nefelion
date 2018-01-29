@@ -47,7 +47,7 @@ const About = props => {
             Pebble
           </a>
           <sup>
-            <a id="ffn1" href="#fn1" class="footnote">
+            <a id="ffn1" href="#fn1">
               1
             </a>
           </sup>.
@@ -81,7 +81,7 @@ const About = props => {
             World Wide Web
           </a>), it’s actually hard to imagine a <em>less</em> accessible data
           repository.<sup>
-            <a id="ffn2" href="#fn2" class="footnote">
+            <a id="ffn2" href="#fn2">
               2
             </a>
           </sup>

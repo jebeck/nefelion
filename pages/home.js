@@ -5,34 +5,21 @@ import FadeInOut from 'components/utils/FadeInOut';
 import TextPage from 'styled/TextPage';
 import wrapPage from 'hoc/wrapPage';
 
-const About = props => {
+const Home = props => {
   const { pathname, status } = props;
   return (
     <FadeInOut pathname={pathname} status={status}>
       <TextPage context="default" text>
-        <h1>help</h1>
-        <p>
-          <span role="img" aria-label="prayer hands emoji">
-            🙏
-          </span>{' '}
-          please file any issues you find{' '}
-          <a
-            href="https://github.com/jebeck/nefelion/issues"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            on GitHub
-          </a>.
-        </p>
+        <h1>logged-in home</h1>
       </TextPage>
     </FadeInOut>
   );
 };
 
-About.propTypes = {
+Home.propTypes = {
   pathname: PropTypes.string.isRequired,
   status: PropTypes.oneOf(['entering', 'entered', 'exiting', 'exited'])
     .isRequired,
 };
 
-export default wrapPage(About);
+export default wrapPage(Home);

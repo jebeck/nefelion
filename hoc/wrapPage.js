@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Broadcast } from 'react-broadcast';
@@ -34,6 +35,7 @@ export const TRANSITION_DURATIONS = {
   '/': 2500,
   '/about': 750,
   '/help': 750,
+  '/home': 750,
   '/login': 750,
   '/signup': 750,
 };
@@ -83,6 +85,8 @@ export default function withLayout(PageComponent) {
     handleNavigation = path => {
       const { url: { pathname } } = this.props;
       const { app: { menuShowing } } = this.store.getState();
+
+      /** TODO: replace setTimeouts with sagas */
       this.setState({ readyToGo: true }, () => {
         setTimeout(() => {
           Router.push(path);
@@ -100,6 +104,9 @@ export default function withLayout(PageComponent) {
       const { url: { pathname } } = this.props;
       const mode = 'default';
       const theme = { mode };
+      const page = _.includes(['/', '/logout'], pathname)
+        ? 'home'
+        : pathname.replace('/', '');
       return (
         <Provider store={this.store}>
           <ThemeProvider theme={theme}>
@@ -110,6 +117,7 @@ export default function withLayout(PageComponent) {
                     firebase={this.firebase}
                     mode={mode}
                     onClick={this.handleNavigation}
+                    page={page}
                   />
                   <FullHeightPusher>
                     <Header theme={theme} />

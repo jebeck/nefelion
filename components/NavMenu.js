@@ -7,7 +7,7 @@ import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { makeLogoutRequester } from 'atomic/logout';
-import { modes, mutedText, text } from 'utils/themes';
+import { modes, disabledText, mutedText, text } from 'utils/themes';
 
 const FlexMenu = styled.div`
   display: flex;
@@ -16,7 +16,17 @@ const FlexMenu = styled.div`
   justify-content: space-between;
 `;
 
-const CustomColorMenuItem = styled(Menu.Item)`
+const DisabledMenuItem = styled(Menu.Item)`
+  color: ${disabledText} !important;
+  :hover,
+  :active,
+  :focus {
+    color: ${disabledText} !important;
+  }
+  cursor: not-allowed !important;
+`;
+
+const MenuItem = styled(Menu.Item)`
   color: ${text} !important;
   :hover,
   :active,
@@ -87,24 +97,25 @@ const LOGGED_OUT_ITEMS = {
 
 class NavMenu extends Component {
   static propTypes = {
-    firebase: PropTypes.object.isRequired,
+    firebase: PropTypes.object,
     loggedIn: PropTypes.bool.isRequired,
     logoutRequest: PropTypes.func.isRequired,
     menuShowing: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(modes).isRequired,
     onClick: PropTypes.func.isRequired,
+    page: PropTypes.string.isRequired,
   };
 
   handleClick = (e, { name }) => {
     if (name === 'logout') {
       const { logoutRequest } = this.props;
-      logoutRequest();
+      return logoutRequest();
     }
-    this.props.onClick(_.includes(['home', 'logout'], name) ? '/' : `/${name}`);
+    this.props.onClick(_.includes(['home'], name) ? '/' : `/${name}`);
   };
 
   render() {
-    const { loggedIn, mode, menuShowing } = this.props;
+    const { loggedIn, mode, menuShowing, page } = this.props;
     const items = loggedIn ? LOGGED_IN_ITEMS : LOGGED_OUT_ITEMS;
     return (
       <Sidebar
@@ -119,28 +130,40 @@ class NavMenu extends Component {
       >
         <FlexMenu>
           <div>
-            {items.top.map(({ icon, name, text }) => (
-              <CustomColorMenuItem
-                key={name}
-                name={name}
-                onClick={this.handleClick}
-              >
-                <Icon name={icon} />
-                {text}
-              </CustomColorMenuItem>
-            ))}
+            {items.top.map(({ icon, name, text }) => {
+              const active = name === page;
+              const MenuItemComponent = active ? DisabledMenuItem : MenuItem;
+              return (
+                <MenuItemComponent
+                  active={name === page}
+                  disabled={name === page}
+                  key={name}
+                  name={name}
+                  onClick={this.handleClick}
+                >
+                  <Icon name={icon} />
+                  {text}
+                </MenuItemComponent>
+              );
+            })}
           </div>
           <div>
-            {items.bottom.map(({ icon, name, text }) => (
-              <CustomColorMenuItem
-                key={name}
-                name={name}
-                onClick={this.handleClick}
-              >
-                <Icon name={icon} />
-                {text}
-              </CustomColorMenuItem>
-            ))}
+            {items.bottom.map(({ icon, name, text }) => {
+              const active = name === page;
+              const MenuItemComponent = active ? DisabledMenuItem : MenuItem;
+              return (
+                <MenuItemComponent
+                  active={name === page}
+                  disabled={name === page}
+                  key={name}
+                  name={name}
+                  onClick={this.handleClick}
+                >
+                  <Icon name={icon} />
+                  {text}
+                </MenuItemComponent>
+              );
+            })}
           </div>
         </FlexMenu>
       </Sidebar>

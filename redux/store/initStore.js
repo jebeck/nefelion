@@ -20,7 +20,7 @@ function configureStore(state) {
   store = createStore(
     reducers,
     state,
-    composeEnhancers(applyMiddleware(loggingMiddleware, sagaMiddleware))
+    composeEnhancers(applyMiddleware(sagaMiddleware, loggingMiddleware))
   );
   return store;
 }
@@ -31,8 +31,8 @@ export default function initStore(isServer, state = initialState) {
   }
   if (!store) {
     store = configureStore(state);
+    sagaMiddleware.run(rootSaga);
   }
-  sagaMiddleware.run(rootSaga);
 
   return store;
 }

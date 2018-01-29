@@ -42,6 +42,11 @@ export const cloud = theme.variants('mode', 'element', {
   sun: { default: lightYellow, dark: lightYellow },
 });
 
+export const disabledText = theme('mode', {
+  default: darkNeutral,
+  dark: darkNeutral,
+});
+
 export const errorText = theme.variants('mode', 'context', {
   default: {
     default: darkRed,

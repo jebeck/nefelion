@@ -1,5 +1,10 @@
 export function login({ auth, email, password }) {
-  return auth.signInWithEmailAndPassword(email, password).catch(error => error);
+  return auth
+    .signInWithEmailAndPassword(email, password)
+    .then(user => {
+      return { user };
+    })
+    .catch(error => ({ error }));
 }
 
 export function logout({ auth, email, password }) {
@@ -9,5 +14,5 @@ export function logout({ auth, email, password }) {
 export function signup({ auth, email, password }) {
   return auth
     .createUserWithEmailAndPassword(email, password)
-    .catch(error => error);
+    .catch(error => ({ error }));
 }

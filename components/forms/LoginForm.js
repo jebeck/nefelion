@@ -38,9 +38,9 @@ class LoginForm extends Component {
       auth: PropTypes.func.isRequired,
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    loginError: PropTypes.object,
     onNavigate: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    loginError: PropTypes.object,
     ...reduxFormPropTypes,
   };
 
