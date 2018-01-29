@@ -7,6 +7,7 @@ import Router from 'next/router';
 import { Grid, Sidebar } from 'semantic-ui-react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import toggleMenu from 'atomic/toggleMenu';
 import Header from 'components/Header';
 import NavMenu from 'components/NavMenu';
 import initStore from 'store/initStore';
@@ -86,10 +87,16 @@ export default function withLayout(PageComponent) {
 
     handleNavigation = path => {
       const { url: { pathname } } = this.props;
+      const { app: { menuShowing } } = this.store.getState();
       this.setState({ readyToGo: true }, () => {
         setTimeout(() => {
           Router.push(path);
         }, TRANSITION_DURATIONS[pathname]);
+        if (menuShowing) {
+          setTimeout(() => {
+            this.store.dispatch(toggleMenu(menuShowing));
+          }, TRANSITION_DURATIONS[pathname] + 250);
+        }
         Router.prefetch(path);
       });
     };

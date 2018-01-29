@@ -52,7 +52,7 @@ Input.propTypes = {
     error: PropTypes.string,
     touched: PropTypes.bool.isRequired,
   }).isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   type: PropTypes.string.isRequired,
 };
 
