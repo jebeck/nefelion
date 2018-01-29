@@ -73,6 +73,10 @@
           "expose": "store"
         },
         {
+          "src": "./styled",
+          "expose": "styled"
+        },
+        {
           "src": "./utils",
           "expose": "utils"
         },

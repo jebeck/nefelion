@@ -11,9 +11,10 @@ import toggleMenu from 'atomic/toggleMenu';
 import Header from 'components/Header';
 import NavMenu from 'components/NavMenu';
 import initStore from 'store/initStore';
+import Divider from 'styled/Divider';
 import initFirebase, { getFirebaseConfig } from 'utils/initFirebase';
 import logger from 'utils/logger';
-import { backgroundColor, mutedText } from 'utils/themes';
+import { backgroundColor } from 'utils/themes';
 
 const WholeViewport = styled.div`
   background-color: ${backgroundColor};
@@ -29,16 +30,10 @@ const FullHeightPusher = styled(Sidebar.Pusher)`
   }
 `;
 
-const Divider = styled.hr`
-  color: ${mutedText};
-  margin: 0;
-  opacity: 0.35;
-`;
-
 export const TRANSITION_DURATIONS = {
   '/': 2500,
-  '/about': 0,
-  '/help': 0,
+  '/about': 750,
+  '/help': 750,
   '/login': 750,
   '/signup': 750,
 };
@@ -103,7 +98,7 @@ export default function withLayout(PageComponent) {
 
     render() {
       const { url: { pathname } } = this.props;
-      const mode = 'dark';
+      const mode = 'default';
       const theme = { mode };
       return (
         <Provider store={this.store}>

@@ -58,6 +58,11 @@ export const formText = theme('mode', {
   dark: darkPurple,
 });
 
+export const headingText = theme('mode', {
+  default: blue,
+  dark: lightYellow,
+});
+
 export const linkHover = theme.variants('mode', 'context', {
   default: {
     default: lighten(0.2, brightPurple),
@@ -92,7 +97,7 @@ export const mutedText = theme('mode', {
 
 export const text = theme('mode', {
   default: darkPurple,
-  dark: almostWhite,
+  dark: neutral,
 });
 
 export const themePropTypes = PropTypes.shape({
