@@ -1,6 +1,14 @@
+export const CLEAR_SIGNUP_FAILURE = 'CLEAR_SIGNUP_FAILURE';
+
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+
+export function clearSignupFailure() {
+  return {
+    type: CLEAR_SIGNUP_FAILURE,
+  };
+}
 
 export function makeSignupRequester(firebase) {
   return function signupRequest({ email, password }) {

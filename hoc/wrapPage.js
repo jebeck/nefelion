@@ -34,12 +34,12 @@ const Divider = styled.hr`
   opacity: 0.35;
 `;
 
-const TRANSITION_DURATIONS = {
+export const TRANSITION_DURATIONS = {
   '/': 2500,
   '/about': 0,
   '/help': 0,
   '/login': 0,
-  '/signup': 0,
+  '/signup': 750,
 };
 
 export default function withLayout(PageComponent) {
@@ -116,6 +116,7 @@ export default function withLayout(PageComponent) {
                         {status => (
                           <PageComponent
                             onNavigate={this.handleNavigation}
+                            pathname={pathname}
                             status={status}
                             theme={theme}
                           />
