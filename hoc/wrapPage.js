@@ -38,7 +38,7 @@ export const TRANSITION_DURATIONS = {
   '/': 2500,
   '/about': 0,
   '/help': 0,
-  '/login': 0,
+  '/login': 750,
   '/signup': 750,
 };
 

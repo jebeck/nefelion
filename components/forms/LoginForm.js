@@ -6,11 +6,9 @@ import { Field, propTypes as reduxFormPropTypes, reduxForm } from 'redux-form';
 import { Form, Message, Segment } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { clearSignupFailure, makeSignupRequester } from 'atomic/signup';
+import { clearLoginFailure, makeLoginRequester } from 'atomic/login';
 import Input from 'components/forms/Input';
 import Link from 'components/utils/Link';
-
-const MIN_PASSWORD_LENGTH = 8;
 
 function validate(values) {
   const errors = {};
@@ -23,11 +21,7 @@ function validate(values) {
     errors._error = 'A required field is missing';
   }
 
-  if (values.password) {
-    if (values.password.length < MIN_PASSWORD_LENGTH) {
-      errors.password = `password should be ≥ ${MIN_PASSWORD_LENGTH} characters`;
-    }
-  } else {
+  if (!values.password) {
     errors._error = 'A required field is missing';
   }
 
@@ -38,7 +32,7 @@ const PaddedGroup = styled(Form.Group)`
   padding-top: 0.5rem;
 `;
 
-class SignupForm extends Component {
+class LoginForm extends Component {
   static propTypes = {
     firebase: PropTypes.shape({
       auth: PropTypes.func.isRequired,
@@ -46,14 +40,14 @@ class SignupForm extends Component {
     handleSubmit: PropTypes.func.isRequired,
     onNavigate: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    signupError: PropTypes.object,
+    loginError: PropTypes.object,
     ...reduxFormPropTypes,
   };
 
   handleReset = () => {
-    const { clearSignupFailure, reset } = this.props;
+    const { clearLoginFailure, reset } = this.props;
     reset();
-    clearSignupFailure();
+    clearLoginFailure();
   };
 
   render() {
@@ -63,7 +57,7 @@ class SignupForm extends Component {
       onNavigate,
       onSubmit,
       pristine,
-      signupError,
+      loginError,
       submitting,
       submitSucceeded,
     } = this.props;
@@ -72,24 +66,17 @@ class SignupForm extends Component {
       <Form
         as={Segment}
         attached
-        error={submitSucceeded && Boolean(signupError)}
+        error={submitSucceeded && Boolean(loginError)}
         size="large"
-        success={submitSucceeded && !signupError}
+        success={submitSucceeded && !loginError}
         warning={!submitSucceeded}
       >
         <Form.Group>
-          <Field
-            component={Input}
-            label="e-mail"
-            name="email"
-            placeholder="an e-mail address you'll use to sign in"
-            type="email"
-          />
+          <Field component={Input} label="e-mail" name="email" type="email" />
           <Field
             component={Input}
             label="password"
             name="password"
-            placeholder="a strong password 🙏"
             type="password"
           />
         </Form.Group>
@@ -107,20 +94,20 @@ class SignupForm extends Component {
           />
         </PaddedGroup>
         {submitSucceeded ? (
-          signupError ? (
-            <Message content={signupError.message} size="tiny" error />
+          loginError ? (
+            <Message content={loginError.message} size="tiny" error />
           ) : (
             <Message content="Submitted!" size="tiny" success />
           )
         ) : (
           <Message size="tiny" warning>
             <Message.Content>
-              already have an account?{' '}
+              don't have an account?{' '}
               <Link
                 context="form"
                 onClick={onNavigate}
-                text="log in"
-                to="/login"
+                text="sign up"
+                to="/signup"
               />{' '}
               instead
             </Message.Content>
@@ -133,15 +120,15 @@ class SignupForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    signupError: state.app.signupError,
+    loginError: state.app.loginError,
   };
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   const { firebase } = ownProps;
-  const signupRequest = makeSignupRequester(firebase);
+  const signupRequest = makeLoginRequester(firebase);
   return bindActionCreators(
-    { clearSignupFailure, onSubmit: signupRequest },
+    { clearLoginFailure, onSubmit: signupRequest },
     dispatch
   );
 }
@@ -149,4 +136,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default reduxForm({
   form: 'signup',
   validate,
-})(connect(mapStateToProps, mapDispatchToProps)(SignupForm));
+})(connect(mapStateToProps, mapDispatchToProps)(LoginForm));

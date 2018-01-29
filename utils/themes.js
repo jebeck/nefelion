@@ -42,9 +42,15 @@ export const cloud = theme.variants('mode', 'element', {
   sun: { default: lightYellow, dark: lightYellow },
 });
 
-export const errorText = theme('mode', {
-  default: darkRed,
-  dark: almostWhite,
+export const errorText = theme.variants('mode', 'context', {
+  default: {
+    default: darkRed,
+    dark: almostWhite,
+  },
+  form: {
+    default: darkRed,
+    dark: darkRed,
+  },
 });
 
 export const formText = theme('mode', {
