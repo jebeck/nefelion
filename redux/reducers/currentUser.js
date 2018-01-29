@@ -6,8 +6,9 @@ export default function currentUser(state = null, action) {
       const { user } = action.payload;
       if (user) {
         return user;
+      } else {
+        return null;
       }
-      return state;
     }
     default:
       return state;

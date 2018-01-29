@@ -1,11 +1,11 @@
 import { call, put } from 'redux-saga/effects';
 
-import { signupFailure } from 'atomic/signup';
+import { loginFailure } from 'atomic/login';
 import * as api from 'utils/firebaseApi';
 
-export default function* signup(action) {
-  const error = yield call(api.signup, action.payload);
+export default function* login(action) {
+  const error = yield call(api.login, action.payload);
   if (error) {
-    yield put(signupFailure(error));
+    yield put(loginFailure(error));
   }
 }

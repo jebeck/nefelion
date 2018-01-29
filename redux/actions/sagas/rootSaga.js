@@ -1,15 +1,27 @@
 import { all, takeLatest } from 'redux-saga/effects';
 
+import { LOGIN_REQUEST } from 'atomic/login';
+import { LOGOUT_REQUEST } from 'atomic/logout';
 import { SIGNUP_REQUEST } from 'atomic/signup';
+import login from 'sagas/login';
+import logout from 'sagas/logout';
 import signup from 'sagas/signup';
 
-function* watchForSignups() {
+function* watchForLogin() {
+  yield takeLatest(LOGIN_REQUEST, login);
+}
+
+function* watchForLogout() {
+  yield takeLatest(LOGOUT_REQUEST, logout);
+}
+
+function* watchForSignup() {
   yield takeLatest(SIGNUP_REQUEST, signup);
 }
 
 export default function* rootSaga() {
   try {
-    yield all([watchForSignups()]);
+    yield all([watchForSignup(), watchForLogin(), watchForLogout()]);
   } catch (err) {
     console.warn(err);
   }

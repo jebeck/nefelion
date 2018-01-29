@@ -111,7 +111,11 @@ export default function withLayout(PageComponent) {
             <Broadcast channel="firebase" value={this.firebase}>
               <WholeViewport>
                 <Sidebar.Pushable>
-                  <NavMenu mode={mode} onClick={this.handleNavigation} />
+                  <NavMenu
+                    firebase={this.firebase}
+                    mode={mode}
+                    onClick={this.handleNavigation}
+                  />
                   <FullHeightPusher>
                     <Header theme={theme} />
                     <Divider />
