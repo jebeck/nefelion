@@ -40,7 +40,7 @@ export const TRANSITION_DURATIONS = {
   '/signup': 750,
 };
 
-export default function withLayout(PageComponent) {
+export default function wrapPage(PageComponent) {
   return class Page extends Component {
     static async getInitialProps({ req }) {
       const isServer = Boolean(req);
@@ -61,7 +61,7 @@ export default function withLayout(PageComponent) {
       }),
       initialState: PropTypes.object.isRequired,
       isServer: PropTypes.bool.isRequired,
-      url: PropTypes.shape({
+      router: PropTypes.shape({
         pathname: PropTypes.string.isRequired,
       }),
     };
@@ -83,7 +83,7 @@ export default function withLayout(PageComponent) {
     }
 
     handleNavigation = path => {
-      const { url: { pathname } } = this.props;
+      const { router: { pathname } } = this.props;
       const { app: { menuShowing } } = this.store.getState();
 
       /** TODO: replace setTimeouts with sagas */
@@ -101,7 +101,7 @@ export default function withLayout(PageComponent) {
     };
 
     render() {
-      const { url: { pathname } } = this.props;
+      const { router: { pathname } } = this.props;
       const mode = 'default';
       const theme = { mode };
       const page = _.includes(['/', '/logout'], pathname)
