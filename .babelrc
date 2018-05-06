@@ -11,7 +11,7 @@
           }
         ]
       ],
-      "presets": "next/babel"
+      "presets": ["next/babel"]
     },
     "production": {
       "plugins": [
@@ -24,7 +24,7 @@
           }
         ]
       ],
-      "presets": "next/babel"
+      "presets": ["next/babel"]
     },
     "test": {
       "plugins": [
@@ -42,49 +42,22 @@
   },
   "plugins": [
     [
-      "module-alias",
-      [
-        {
-          "src": "./components",
-          "expose": "components"
-        },
-        {
-          "src": "./hoc",
-          "expose": "hoc"
-        },
-        {
-          "src": "./pages",
-          "expose": "pages"
-        },
-        {
-          "src": "./redux/actions/atomic",
-          "expose": "atomic"
-        },
-        {
-          "src": "./redux/actions/sagas",
-          "expose": "sagas"
-        },
-        {
-          "src": "./redux/reducers",
-          "expose": "reducers"
-        },
-        {
-          "src": "./redux/store",
-          "expose": "store"
-        },
-        {
-          "src": "./styled",
-          "expose": "styled"
-        },
-        {
-          "src": "./utils",
-          "expose": "utils"
-        },
-        {
-          "src": "./utils/animations",
-          "expose": "animations"
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "components": "./components",
+          "hoc": "./hoc",
+          "pages": "./pages",
+          "atomic": "./redux/actions/atomic",
+          "sagas": "./redux/actions/sagas",
+          "reducers": "./redux/reducers",
+          "store": "./redux/store",
+          "styled": "./styled",
+          "utils": "./utils",
+          "animations": "./utils/animations"
         }
-      ]
+      }
     ]
   ]
 }
