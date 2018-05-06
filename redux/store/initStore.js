@@ -20,7 +20,9 @@ function configureStore(state) {
   store = createStore(
     reducers,
     state,
-    composeEnhancers(applyMiddleware(sagaMiddleware, loggingMiddleware))
+    process.env.NODE_ENV === 'production'
+      ? composeEnhancers(applyMiddleware(sagaMiddleware))
+      : composeEnhancers(applyMiddleware(sagaMiddleware, loggingMiddleware))
   );
   return store;
 }
