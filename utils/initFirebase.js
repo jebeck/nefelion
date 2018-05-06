@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { initializeApp } from 'firebase';
+import 'firebase/firestore';
 
 import firebaseAuthStateChange from 'atomic/firebaseAuthStateChange';
 
@@ -34,6 +35,7 @@ export default function initFirebase(config, isServer, dispatch) {
 
   if (!firebase && !_.isEmpty(config)) {
     firebase = initializeApp(config);
+    firebase.firestore().settings({ timestampsInSnapshots: true });
 
     firebase.auth().onAuthStateChanged(user => {
       dispatch(firebaseAuthStateChange(user));
