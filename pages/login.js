@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Subscriber } from 'react-broadcast';
 import { Grid, Icon, Message } from 'semantic-ui-react';
 
 import LoginForm from 'components/forms/LoginForm';
 import FadeInOut from 'components/utils/FadeInOut';
-import wrapPage from 'hoc/wrapPage';
+import wrapPage, { FirebaseContext } from 'hoc/wrapPage';
 
 const Login = props => {
   const { onNavigate, pathname, status } = props;
@@ -19,11 +18,11 @@ const Login = props => {
               <Message.Header>log in to your nefelion account</Message.Header>
             </Message.Content>
           </Message>
-          <Subscriber channel="firebase">
+          <FirebaseContext.Consumer>
             {firebase => (
               <LoginForm firebase={firebase} onNavigate={onNavigate} />
             )}
-          </Subscriber>
+          </FirebaseContext.Consumer>
         </Grid.Column>
       </Grid>
     </FadeInOut>

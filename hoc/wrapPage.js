@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Broadcast } from 'react-broadcast';
 import { Transition } from 'react-transition-group';
 import { Provider } from 'react-redux';
 import Router from 'next/router';
@@ -39,6 +38,11 @@ export const TRANSITION_DURATIONS = {
   '/login': 750,
   '/signup': 750,
 };
+
+export const FirebaseContext = React.createContext({
+  auth: _.noop,
+  firestore: _.noop,
+});
 
 export default function wrapPage(PageComponent) {
   return class Page extends Component {
@@ -110,7 +114,7 @@ export default function wrapPage(PageComponent) {
       return (
         <Provider store={this.store}>
           <ThemeProvider theme={theme}>
-            <Broadcast channel="firebase" value={this.firebase}>
+            <FirebaseContext.Provider value={this.firebase}>
               <WholeViewport>
                 <Sidebar.Pushable>
                   <NavMenu
@@ -140,7 +144,7 @@ export default function wrapPage(PageComponent) {
                   </FullHeightPusher>
                 </Sidebar.Pushable>
               </WholeViewport>
-            </Broadcast>
+            </FirebaseContext.Provider>
           </ThemeProvider>
         </Provider>
       );
