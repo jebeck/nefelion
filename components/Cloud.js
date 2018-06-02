@@ -94,8 +94,8 @@ class Cloud extends Component {
     this.mountAnimation = mount();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.status === 'entered' && nextProps.status === 'exiting') {
+  componentDidUpdate(prevProps) {
+    if (prevProps.status === 'entered' && this.props.status === 'exiting') {
       if (this.mountAnimation) {
         this.mountAnimation.kill();
       }
