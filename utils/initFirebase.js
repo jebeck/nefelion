@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase';
 import 'firebase/firestore';
 
 import firebaseAuthStateChange from 'atomic/firebaseAuthStateChange';
+import { getUserClaimsSuccess } from 'atomic/userClaims';
 
 export function getFirebaseConfig() {
   const config = {};
@@ -38,6 +39,16 @@ export default function initFirebase(config, isServer, dispatch) {
     firebase.firestore().settings({ timestampsInSnapshots: true });
 
     firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        firebase
+          .auth()
+          .currentUser.getIdTokenResult()
+          .then(({ claims }) => {
+            if (claims) {
+              dispatch(getUserClaimsSuccess(claims));
+            }
+          });
+      }
       dispatch(firebaseAuthStateChange(user));
     });
   }
