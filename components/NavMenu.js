@@ -107,11 +107,13 @@ class NavMenu extends Component {
   };
 
   handleClick = (e, { name }) => {
+    const { loggedIn, logoutRequest } = this.props;
     if (name === 'logout') {
-      const { logoutRequest } = this.props;
       return logoutRequest();
     }
-    this.props.onClick(_.includes(['home'], name) ? '/' : `/${name}`);
+    this.props.onClick(
+      _.includes(['home'], name) && !loggedIn ? '/' : `/${name}`
+    );
   };
 
   render() {
