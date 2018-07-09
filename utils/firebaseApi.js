@@ -1,8 +1,13 @@
 export function login({ auth, email, password }) {
   return auth
     .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      return { user };
+    .then(async user => {
+      const claims = await auth.currentUser
+        .getIdTokenResult()
+        .then(({ claims }) => {
+          return claims;
+        });
+      return { claims, user };
     })
     .catch(error => ({ error }));
 }
