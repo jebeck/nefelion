@@ -97,6 +97,7 @@ const LOGGED_OUT_ITEMS = {
 
 class NavMenu extends Component {
   static propTypes = {
+    canTrack: PropTypes.bool.isRequired,
     firebase: PropTypes.object,
     loggedIn: PropTypes.bool.isRequired,
     logoutRequest: PropTypes.func.isRequired,
@@ -117,8 +118,15 @@ class NavMenu extends Component {
   };
 
   render() {
-    const { loggedIn, mode, menuShowing, page } = this.props;
-    const items = loggedIn ? LOGGED_IN_ITEMS : LOGGED_OUT_ITEMS;
+    const { canTrack, loggedIn, mode, menuShowing, page } = this.props;
+    const items = loggedIn ? _.cloneDeep(LOGGED_IN_ITEMS) : LOGGED_OUT_ITEMS;
+    if (canTrack && loggedIn) {
+      items.top.splice(1, 0, {
+        icon: 'edit',
+        name: 'track',
+        text: 'track',
+      });
+    }
     return (
       <Sidebar
         animation="push"
@@ -175,6 +183,7 @@ class NavMenu extends Component {
 
 function mapStateToProps(state) {
   return {
+    canTrack: _.get(state, ['app', 'currentUserClaims', 'track']),
     loggedIn: Boolean(state.app.currentUser),
     menuShowing: state.app.menuShowing,
   };
