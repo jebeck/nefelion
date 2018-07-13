@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "deploy": "now -e FIREBASE_API_KEY=@firebase_api_key -e FIREBASE_MESSAGING_SENDER_ID=@firebase_messaging_sender_id -e FIREBASE_PROJECT_ID=@firebase_project_id",
+    "deploy":
+      "now -e FIREBASE_API_KEY=@firebase_api_key -e FIREBASE_MESSAGING_SENDER_ID=@firebase_messaging_sender_id -e FIREBASE_PROJECT_ID=@firebase_project_id",
     "dev": "next",
     "lint": "eslint **/*.js",
     "start": "next start"
@@ -38,7 +39,7 @@
     "redux-form": "7.4.2",
     "redux-logger": "3.0.6",
     "redux-saga": "0.16.0",
-    "semantic-ui-css": "2.3.2",
+    "semantic-ui-css": "2.3.3",
     "semantic-ui-react": "0.82.0",
     "styled-components": "3.3.3",
     "styled-theming": "2.2.0"
@@ -48,10 +49,10 @@
     "eslint": "^4.1.1",
     "eslint-config-prettier": "2.9.0",
     "eslint-config-react-app": "2.1.0",
-    "eslint-plugin-flowtype": "^2.34.1",
-    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-react": "^7.10.0",
     "prettier-eslint": "8.8.2",
     "prop-types": "15.6.2"
   },
