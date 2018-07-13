@@ -37,7 +37,7 @@
           }
         ]
       ],
-      "presets": [["env", { "modules": "commonjs" }], "next/babel"]
+      "presets": [["env", { "targets": { "node": "8" } }], "next/babel"]
     }
   },
   "plugins": [
