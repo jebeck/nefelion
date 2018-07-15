@@ -1,4 +1,5 @@
 .config.sh
 .next/
+coverage/
 node_modules/
 static/gsap/
